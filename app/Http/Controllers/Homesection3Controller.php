@@ -7,6 +7,42 @@ use App\Homesection3;
 
 class Homesection3Controller extends Controller
 {
+
+    //convert png or jpg to webp
+    function png_to_webp($beforeLocation, $afterLocation){
+
+        $imgLocationBefore = base_path() .'/storage/app/homesection_others/'.$beforeLocation;
+
+        $imgLocationAfter = base_path() .'/storage/app/'.$afterLocation;
+
+        $img = imagecreatefrompng($imgLocationBefore);
+        imagepalettetotruecolor($img);
+        imagealphablending($img, true);
+        imagesavealpha($img, true);
+
+        imagewebp($img, $imgLocationAfter, 80);
+
+        imagedestroy($img);
+
+    }
+    function jpg_to_webp($beforeLocation, $afterLocation){
+
+        $imgLocationBefore = base_path() .'/storage/app/homesection_others/'.$beforeLocation;
+
+        $imgLocationAfter = base_path() .'/storage/app/'.$afterLocation;
+
+        $img = imagecreatefromjpeg($imgLocationBefore);
+        imagepalettetotruecolor($img);
+        imagealphablending($img, true);
+        imagesavealpha($img, true);
+
+        imagewebp($img, $imgLocationAfter, 80);
+
+        imagedestroy($img);
+
+    }
+
+
     function homesection3Add(Request $req){
         
         $homesection3 = new Homesection3;
@@ -16,7 +52,33 @@ class Homesection3Controller extends Controller
         $homesection3->homesection3_category = $req->input('category');
         
         if($req->file('image')!=''){
-        $homesection3->homesection3_image = $req->file('image')->store('homesection3');
+        //$homesection3->homesection3_image = $req->file('image')->store('homesection1');
+        $homesection3->homesection3_image = $req->file('image')->store('homesection_others');
+        $homesection3->homesection3_image = $req->file('image')->hashName();
+        $image_name = pathinfo($homesection3->homesection3_image, PATHINFO_FILENAME);
+        $image_extension = pathinfo($homesection3->homesection3_image, PATHINFO_EXTENSION);
+
+        $new_image_name = 'homesection1/'.$image_name.'.webp';
+
+        if($image_extension=='PNG' || $image_extension=='png'){
+            Homesection3Controller::png_to_webp($homesection3->homesection3_image,$new_image_name);
+            $homesection3->homesection3_image = $new_image_name;
+            
+        }elseif($image_extension=='JPG' || $image_extension=='jpg' || $image_extension=='JPEG' || $image_extension=='jpeg'){
+            Homesection3Controller::jpg_to_webp($homesection3->homesection3_image,$new_image_name);
+            $homesection3->homesection3_image = $new_image_name;
+            
+        }else{
+            return response([
+                'error'=>"Please select jpg or png image"
+            ]);
+        }
+        
+        //delete pic from another folder
+            if(file_exists(base_path() .'/storage/app/homesection_others/'.$req->file('image')->hashName())) {
+                @unlink(base_path() .'/storage/app/homesection_others/'.$req->file('image')->hashName());
+            }
+
         }else{
             return response([
                 'error'=>"Please select an image"
