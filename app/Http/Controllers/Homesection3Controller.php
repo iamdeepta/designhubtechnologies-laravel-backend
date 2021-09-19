@@ -136,6 +136,57 @@ class Homesection3Controller extends Controller
     }
 
 
+    //update image
+    function homesection3UpdateImage($name, Request $req){
+
+        $homesection3 = Homesection3::where('homesection3_image',$name)->first();
+
+        if($req->file('image_up')!=''){
+
+            //delete existing image uploaded before updating from homesection1
+        if(file_exists(base_path() .'/storage/app/'.$homesection3->homesection3_image)) {
+                @unlink(base_path() .'/storage/app/'.$homesection3->homesection3_image);
+            }
+        
+        $homesection3->homesection3_image = $req->file('image_up')->store('homesection_others');
+        $homesection3->homesection3_image = $req->file('image_up')->hashName();
+        $image_name = pathinfo($homesection3->homesection3_image, PATHINFO_FILENAME);
+        $image_extension = pathinfo($homesection3->homesection3_image, PATHINFO_EXTENSION);
+
+        $new_image_name = 'homesection1/'.$image_name.'.webp';
+
+        if($image_extension=='PNG' || $image_extension=='png'){
+            Homesection3Controller::png_to_webp($homesection3->homesection3_image,$new_image_name);
+            $homesection3->homesection3_image = $new_image_name;
+            
+        }elseif($image_extension=='JPG' || $image_extension=='jpg' || $image_extension=='JPEG' || $image_extension=='jpeg'){
+            Homesection3Controller::jpg_to_webp($homesection3->homesection3_image,$new_image_name);
+            $homesection3->homesection3_image = $new_image_name;
+            
+        }else{
+            return response([
+                'error'=>"Please select jpg or png image"
+            ]);
+        }
+        
+        //delete pic from another folder
+            if(file_exists(base_path() .'/storage/app/homesection_others/'.$req->file('image_up')->hashName())) {
+                @unlink(base_path() .'/storage/app/homesection_others/'.$req->file('image_up')->hashName());
+            }
+
+            $homesection3->save();
+            return response([
+                'success'=>"Image Updated Successfully"
+            ]);
+
+        }else{
+            return response([
+                'error'=>"Please select an image"
+            ]);
+        }
+    }
+
+
     function homesection3Delete($id, Request $req){
 
         $homesection3 = Homesection3::find($id);
