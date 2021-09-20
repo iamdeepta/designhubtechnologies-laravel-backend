@@ -14,6 +14,8 @@ use App\Http\Controllers\Homesection7Controller;
 use App\Http\Controllers\Homesection7MainController;
 use App\Http\Controllers\Homesection4Controller;
 use App\Http\Controllers\Homesection4MainController;
+use App\Http\Controllers\Aboutsection1Controller;
+use App\Http\Controllers\Aboutsection1MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,3 +111,16 @@ Route::post('homesection4MainUpdateIcon/{name?}',[Homesection4MainController::cl
 Route::post('homesection4MainUpdateImage1/{name?}',[Homesection4MainController::class,'homesection4MainUpdateImage1'])->where('name', '(.*)');
 Route::post('homesection4MainUpdateImage2/{name?}',[Homesection4MainController::class,'homesection4MainUpdateImage2'])->where('name', '(.*)');
 Route::post('homesection4MainUpdateImage3/{name?}',[Homesection4MainController::class,'homesection4MainUpdateImage3'])->where('name', '(.*)');
+
+//About section1
+Route::post('aboutsection1Add',[Aboutsection1Controller::class,'aboutsection1Add']);
+Route::get('aboutsection1Get',[Aboutsection1Controller::class,'aboutsection1Get']);
+Route::post('aboutsection1Delete/{id}',[Aboutsection1Controller::class,'aboutsection1Delete']);
+Route::post('aboutsection1Update/{id}',[Aboutsection1Controller::class,'aboutsection1Update']);
+
+//About section1 Main
+Route::post('aboutsection1MainAdd',[Aboutsection1MainController::class,'aboutsection1MainAdd']);
+Route::get('aboutsection1MainGet',[Aboutsection1MainController::class,'aboutsection1MainGet']);
+Route::post('aboutsection1MainDelete/{id}',[Aboutsection1MainController::class,'aboutsection1MainDelete']);
+Route::post('aboutsection1MainUpdate/{id}',[Aboutsection1MainController::class,'aboutsection1MainUpdate']);
+Route::post('aboutsection1MainUpdateImage/{name?}',[Aboutsection1MainController::class,'aboutsection1MainUpdateImage'])->where('name', '(.*)');
