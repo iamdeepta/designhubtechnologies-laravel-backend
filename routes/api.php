@@ -16,6 +16,15 @@ use App\Http\Controllers\Homesection4Controller;
 use App\Http\Controllers\Homesection4MainController;
 use App\Http\Controllers\Aboutsection1Controller;
 use App\Http\Controllers\Aboutsection1MainController;
+use App\Http\Controllers\Aboutsection2Controller;
+use App\Http\Controllers\Aboutsection2MainController;
+use App\Http\Controllers\Servicesection1Controller;
+use App\Http\Controllers\Servicesection1MainController;
+use App\Http\Controllers\Servicesection2Controller;
+use App\Http\Controllers\Servicesdetailssection1Controller;
+use App\Http\Controllers\Servicesdetailssection2Controller;
+use App\Http\Controllers\Servicesdetailssection2MainController;
+use App\Http\Controllers\BlogsectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,3 +133,64 @@ Route::get('aboutsection1MainGet',[Aboutsection1MainController::class,'aboutsect
 Route::post('aboutsection1MainDelete/{id}',[Aboutsection1MainController::class,'aboutsection1MainDelete']);
 Route::post('aboutsection1MainUpdate/{id}',[Aboutsection1MainController::class,'aboutsection1MainUpdate']);
 Route::post('aboutsection1MainUpdateImage/{name?}',[Aboutsection1MainController::class,'aboutsection1MainUpdateImage'])->where('name', '(.*)');
+
+//About section2
+Route::post('aboutsection2Add',[Aboutsection2Controller::class,'aboutsection2Add']);
+Route::get('aboutsection2Get',[Aboutsection2Controller::class,'aboutsection2Get']);
+Route::post('aboutsection2Delete/{id}',[Aboutsection2Controller::class,'aboutsection2Delete']);
+Route::post('aboutsection2Update/{id}',[Aboutsection2Controller::class,'aboutsection2Update']);
+Route::post('aboutsection2UpdateImage/{name?}',[Aboutsection2Controller::class,'aboutsection2UpdateImage'])->where('name', '(.*)');
+
+//About section2 main list
+Route::post('aboutsection2MainAdd',[Aboutsection2MainController::class,'aboutsection2MainAdd']);
+Route::get('aboutsection2MainGet',[Aboutsection2MainController::class,'aboutsection2MainGet']);
+Route::post('aboutsection2MainDelete/{id}',[Aboutsection2MainController::class,'aboutsection2MainDelete']);
+Route::post('aboutsection2MainUpdate/{id}',[Aboutsection2MainController::class,'aboutsection2MainUpdate']);
+
+//Service section1
+Route::post('servicesection1Add',[Servicesection1Controller::class,'servicesection1Add']);
+Route::get('servicesection1Get',[Servicesection1Controller::class,'servicesection1Get']);
+Route::post('servicesection1Delete/{id}',[Servicesection1Controller::class,'servicesection1Delete']);
+Route::post('servicesection1Update/{id}',[Servicesection1Controller::class,'servicesection1Update']);
+
+//Service section1 main
+Route::post('servicesection1MainAdd',[Servicesection1MainController::class,'servicesection1MainAdd']);
+Route::get('servicesection1MainGet',[Servicesection1MainController::class,'servicesection1MainGet']);
+Route::post('servicesection1MainDelete/{id}',[Servicesection1MainController::class,'servicesection1MainDelete']);
+Route::post('servicesection1MainUpdate/{id}',[Servicesection1MainController::class,'servicesection1MainUpdate']);
+Route::post('servicesection1MainUpdateImage/{name?}',[Servicesection1MainController::class,'servicesection1MainUpdateImage'])->where('name', '(.*)');
+
+//Service section2
+Route::post('servicesection2Add',[Servicesection2Controller::class,'servicesection2Add']);
+Route::get('servicesection2Get',[Servicesection2Controller::class,'servicesection2Get']);
+Route::post('servicesection2Delete/{id}',[Servicesection2Controller::class,'servicesection2Delete']);
+Route::post('servicesection2Update/{id}',[Servicesection2Controller::class,'servicesection2Update']);
+
+//Services Details section1
+Route::post('servicesdetailssection1Add',[Servicesdetailssection1Controller::class,'servicesdetailssection1Add']);
+Route::get('servicesdetailssection1Get',[Servicesdetailssection1Controller::class,'servicesdetailssection1Get']);
+Route::post('servicesdetailssection1Delete/{id}',[Servicesdetailssection1Controller::class,'servicesdetailssection1Delete']);
+Route::post('servicesdetailssection1Update/{id}',[Servicesdetailssection1Controller::class,'servicesdetailssection1Update']);
+Route::post('servicesdetailssection1UpdateImage/{name?}',[Servicesdetailssection1Controller::class,'servicesdetailssection1UpdateImage'])->where('name', '(.*)');
+
+//Services Details section2
+Route::post('servicesdetailssection2Add',[Servicesdetailssection2Controller::class,'servicesdetailssection2Add']);
+Route::get('servicesdetailssection2Get',[Servicesdetailssection2Controller::class,'servicesdetailssection2Get']);
+Route::post('servicesdetailssection2Delete/{id}',[Servicesdetailssection2Controller::class,'servicesdetailssection2Delete']);
+Route::post('servicesdetailssection2Update/{id}',[Servicesdetailssection2Controller::class,'servicesdetailssection2Update']);
+
+//Services Details section2 main list
+Route::post('servicesdetailssection2MainAdd',[Servicesdetailssection2MainController::class,'servicesdetailssection2MainAdd']);
+Route::get('servicesdetailssection2MainGet',[Servicesdetailssection2MainController::class,'servicesdetailssection2MainGet']);
+Route::post('servicesdetailssection2MainDelete/{id}',[Servicesdetailssection2MainController::class,'servicesdetailssection2MainDelete']);
+Route::post('servicesdetailssection2MainUpdate/{id}',[Servicesdetailssection2MainController::class,'servicesdetailssection2MainUpdate']);
+
+//Blog section
+Route::post('blogsectionAdd',[BlogsectionController::class,'blogsectionAdd']);
+Route::get('blogsectionGet',[BlogsectionController::class,'blogsectionGet']);
+Route::post('blogsectionDelete/{id}',[BlogsectionController::class,'blogsectionDelete']);
+Route::post('blogsectionUpdate/{id}',[BlogsectionController::class,'blogsectionUpdate']);
+Route::post('blogsectionUpdateIcon/{name?}',[BlogsectionController::class,'blogsectionUpdateIcon'])->where('name', '(.*)');
+Route::post('blogsectionUpdateImage1/{name?}',[BlogsectionController::class,'blogsectionUpdateImage1'])->where('name', '(.*)');
+Route::post('blogsectionUpdateImage2/{name?}',[BlogsectionController::class,'blogsectionUpdateImage2'])->where('name', '(.*)');
+Route::post('blogsectionUpdateImage3/{name?}',[BlogsectionController::class,'blogsectionUpdateImage3'])->where('name', '(.*)');
