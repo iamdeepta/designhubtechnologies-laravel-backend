@@ -178,6 +178,16 @@ class BlogsectionController extends Controller
         }
     }
 
+    function blogsectionGet3(){
+
+        $result = Blogsection::where('blogsection_status',0)->orderBy('blogsection_id','desc')->take(3)->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
 
     function blogsectionUpdate($id, Request $req){
 

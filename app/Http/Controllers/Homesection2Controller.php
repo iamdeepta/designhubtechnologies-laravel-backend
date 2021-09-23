@@ -47,10 +47,10 @@ class Homesection2Controller extends Controller
     function homesection2Add(Request $req){
         
         $homesection2 = new Homesection2;
-        $homesection2->homesection2_main_title = $req->input('main_title');
+        //$homesection2->homesection2_main_title = $req->input('main_title');
         $homesection2->homesection2_title = $req->input('title');
         $homesection2->homesection2_description = $req->input('description');
-        $homesection2->homesection2_category = $req->input('category');
+        //$homesection2->homesection2_category = $req->input('category');
         
         if($req->file('image')!=''){
         $homesection2->homesection2_image = $req->file('image')->store('homesection_others');
@@ -89,7 +89,7 @@ class Homesection2Controller extends Controller
         $homesection2->homesection2_date = date("Y-m-d");
 
 
-        if($req->input('main_title')!='' && $req->input('title')!='' && $req->input('description')!='' && $req->input('category')!='' && $req->file('image')!=''){
+        if($req->input('title')!='' && $req->input('description')!='' && $req->file('image')!=''){
             $homesection2->save();
             return response([
                 'success'=>"Added Successfully"
@@ -113,18 +113,28 @@ class Homesection2Controller extends Controller
         }
     }
 
+    function homesection2Get3(){
+
+        $result = Homesection2::where('homesection2_status',0)->orderBy('homesection2_id','desc')->take(3)->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
 
     function homesection2Update($id, Request $req){
 
         $homesection2 = Homesection2::where('homesection2_id',$id)->first();
-        $homesection2->homesection2_main_title = $req->input('main_title_up');
+        //$homesection2->homesection2_main_title = $req->input('main_title_up');
         $homesection2->homesection2_title = $req->input('title_up');
         $homesection2->homesection2_description = $req->input('description_up');
         //if($req->input('category')!=''){
-        $homesection2->homesection2_category = $req->input('category_up');
+        //$homesection2->homesection2_category = $req->input('category_up');
         //}
 
-        if($homesection2->homesection2_main_title!='' && $homesection2->homesection2_main_title!='' && $homesection2->homesection2_description!='' && $homesection2->homesection2_category!=''){
+        if($homesection2->homesection2_main_title!='' && $homesection2->homesection2_description!=''){
             $homesection2->save();
             return response([
                 'success'=>"Updated Successfully"

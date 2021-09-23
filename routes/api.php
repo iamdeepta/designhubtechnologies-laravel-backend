@@ -57,6 +57,7 @@ Route::post('homesection1UpdateImage4/{name?}',[Homesection1Controller::class,'h
 //Home section2
 Route::post('homesection2Add',[Homesection2Controller::class,'homesection2Add']);
 Route::get('homesection2Get',[Homesection2Controller::class,'homesection2Get']);
+Route::get('homesection2Get3',[Homesection2Controller::class,'homesection2Get3']);
 Route::post('homesection2Delete/{id}',[Homesection2Controller::class,'homesection2Delete']);
 Route::post('homesection2Update/{id}',[Homesection2Controller::class,'homesection2Update']);
 Route::post('homesection2UpdateImage/{name?}',[Homesection2Controller::class,'homesection2UpdateImage'])->where('name', '(.*)');
@@ -188,6 +189,7 @@ Route::post('servicesdetailssection2MainUpdate/{id}',[Servicesdetailssection2Mai
 //Blog section
 Route::post('blogsectionAdd',[BlogsectionController::class,'blogsectionAdd']);
 Route::get('blogsectionGet',[BlogsectionController::class,'blogsectionGet']);
+Route::get('blogsectionGet3',[BlogsectionController::class,'blogsectionGet3']);
 Route::post('blogsectionDelete/{id}',[BlogsectionController::class,'blogsectionDelete']);
 Route::post('blogsectionUpdate/{id}',[BlogsectionController::class,'blogsectionUpdate']);
 Route::post('blogsectionUpdateIcon/{name?}',[BlogsectionController::class,'blogsectionUpdateIcon'])->where('name', '(.*)');
