@@ -84,14 +84,14 @@ class Servicesection1MainController extends Controller
             ]);
         }
 
-        $servicesection1Main->servicesection1_main_status = 0;
+        $servicesection1Main->servicesection1_main_status = 7;
         $servicesection1Main->servicesection1_main_date = date("Y-m-d");
 
 
         if($req->input('main_title')!='' && $req->input('main_description')!='' && $req->file('main_image')!=''){
             $servicesection1Main->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -105,6 +105,16 @@ class Servicesection1MainController extends Controller
     function servicesection1MainGet(){
 
         $result = Servicesection1Main::where('servicesection1_main_status',0)->orderBy('servicesection1_main_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function servicesection1MainGetSuper(){
+
+        $result = Servicesection1Main::where('servicesection1_main_status',7)->orderBy('servicesection1_main_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -194,6 +204,35 @@ class Servicesection1MainController extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function servicesection1MainApprove($id, Request $req){
+
+        $servicesection1Main = Servicesection1Main::find($id);
+        $servicesection1Main->servicesection1_main_status = 0;
+        
+        
+            $servicesection1Main->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+
+    function servicesection1MainDecline($id, Request $req){
+
+        $servicesection1Main = Servicesection1Main::find($id);
+        $servicesection1Main->servicesection1_main_status = 2;
+        
+        
+            $servicesection1Main->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

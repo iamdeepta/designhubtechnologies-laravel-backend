@@ -149,7 +149,7 @@ class BlogsectionController extends Controller
         }
 
 
-        $blogsection->blogsection_status = 0;
+        $blogsection->blogsection_status = 7;
         $blogsection->blogsection_day = date("d M");
         $blogsection->blogsection_year = date("Y");
 
@@ -157,7 +157,7 @@ class BlogsectionController extends Controller
         if($req->input('title')!='' && $req->input('description1')!='' && $req->input('tag')!='' && $req->input('category')!='' && $req->input('time')!='' &&  $req->file('image1')!=''){
             $blogsection->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -171,6 +171,16 @@ class BlogsectionController extends Controller
     function blogsectionGet(){
 
         $result = Blogsection::where('blogsection_status',0)->orderBy('blogsection_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function blogsectionGetSuper(){
+
+        $result = Blogsection::where('blogsection_status',7)->orderBy('blogsection_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -378,6 +388,36 @@ class BlogsectionController extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+
+    function blogsectionApprove($id, Request $req){
+
+        $blogsection = Blogsection::find($id);
+        $blogsection->blogsection_status = 0;
+        
+        
+            $blogsection->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+
+    function blogsectionDecline($id, Request $req){
+
+        $blogsection = Blogsection::find($id);
+        $blogsection->blogsection_status = 2;
+        
+        
+            $blogsection->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

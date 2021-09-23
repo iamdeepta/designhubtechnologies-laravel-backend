@@ -13,14 +13,14 @@ class Aboutsection1Controller extends Controller
         $aboutsection1->aboutsection1_title = $req->input('title');
         $aboutsection1->aboutsection1_description = $req->input('description');
 
-        $aboutsection1->aboutsection1_status = 0;
+        $aboutsection1->aboutsection1_status = 7;
         $aboutsection1->aboutsection1_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('description')!=''){
             $aboutsection1->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -34,6 +34,16 @@ class Aboutsection1Controller extends Controller
     function aboutsection1Get(){
 
         $result = Aboutsection1::where('aboutsection1_status',0)->orderBy('aboutsection1_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function aboutsection1GetSuper(){
+
+        $result = Aboutsection1::where('aboutsection1_status',7)->orderBy('aboutsection1_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -72,6 +82,34 @@ class Aboutsection1Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function aboutsection1Approve($id, Request $req){
+
+        $aboutsection1 = Aboutsection1::find($id);
+        $aboutsection1->aboutsection1_status = 0;
+        
+        
+            $aboutsection1->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function aboutsection1Decline($id, Request $req){
+
+        $aboutsection1 = Aboutsection1::find($id);
+        $aboutsection1->aboutsection1_status = 2;
+        
+        
+            $aboutsection1->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

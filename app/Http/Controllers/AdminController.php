@@ -19,9 +19,16 @@ class AdminController extends Controller
                 'error'=>"Incorrect username or password"
             ]);
         }else{
-            return response([
+            if($admin_username->admin_status=='sadmin'){
+                return response([
+                    'success_top'=>"topadmin"
+                ]);
+            }else{
+                return response([
                 'success'=>"Login Successful"
             ]);
+            }
+        
         }
         //return $admin_username;
     }

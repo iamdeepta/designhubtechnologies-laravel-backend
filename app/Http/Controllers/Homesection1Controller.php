@@ -171,7 +171,7 @@ class Homesection1Controller extends Controller
             }
         }
 
-        $homesection1->homesection1_status = 0;
+        $homesection1->homesection1_status = 7;
         $homesection1->homesection1_date = date("Y-m-d");
 
 
@@ -179,7 +179,7 @@ class Homesection1Controller extends Controller
         if($req->input('title')!='' && $req->input('description')!='' && $req->file('image1')!=''){
             $homesection1->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request Sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -194,6 +194,16 @@ class Homesection1Controller extends Controller
     function homesection1Get(){
 
         $result = Homesection1::where('homesection1_status',0)->orderBy('homesection1_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection1GetSuper(){
+
+        $result = Homesection1::where('homesection1_status',7)->orderBy('homesection1_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -438,6 +448,36 @@ class Homesection1Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    //approve
+    function homesection1Approve($id, Request $req){
+
+        $homesection1 = Homesection1::find($id);
+        $homesection1->homesection1_status = 0;
+        
+        
+            $homesection1->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    //decline
+    function homesection1Decline($id, Request $req){
+
+        $homesection1 = Homesection1::find($id);
+        $homesection1->homesection1_status = 2;
+        
+        
+            $homesection1->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

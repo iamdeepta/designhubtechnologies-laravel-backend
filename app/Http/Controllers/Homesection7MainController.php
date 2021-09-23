@@ -18,14 +18,14 @@ class Homesection7MainController extends Controller
         $homesection7Main->homesection7_main_description = $req->input('main_description_faq');
         
 
-        $homesection7Main->homesection7_main_status = 0;
+        $homesection7Main->homesection7_main_status = 7;
         $homesection7Main->homesection7_main_date = date("Y-m-d");
 
 
         if($req->input('main_title_faq')!='' && $req->input('main_description_faq')!=''){
             $homesection7Main->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -39,6 +39,16 @@ class Homesection7MainController extends Controller
     function homesection7MainGet(){
 
         $result = Homesection7Main::where('homesection7_main_status',0)->orderBy('homesection7_main_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection7MainGetSuper(){
+
+        $result = Homesection7Main::where('homesection7_main_status',7)->orderBy('homesection7_main_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -78,6 +88,34 @@ class Homesection7MainController extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function homesection7MainApprove($id, Request $req){
+
+        $homesection7Main = Homesection7Main::find($id);
+        $homesection7Main->homesection7_main_status = 0;
+        
+        
+            $homesection7Main->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function homesection7MainDecline($id, Request $req){
+
+        $homesection7Main = Homesection7Main::find($id);
+        $homesection7Main->homesection7_main_status = 2;
+        
+        
+            $homesection7Main->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

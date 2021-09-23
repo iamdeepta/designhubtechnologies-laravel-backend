@@ -13,14 +13,14 @@ class Servicesdetailssection2Controller extends Controller
         $servicesdetailssection2->servicesdetailssection2_title = $req->input('title');
     
 
-        $servicesdetailssection2->servicesdetailssection2_status = 0;
+        $servicesdetailssection2->servicesdetailssection2_status = 7;
         $servicesdetailssection2->servicesdetailssection2_date = date("Y-m-d");
 
 
         if($req->input('title')!=''){
             $servicesdetailssection2->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -34,6 +34,17 @@ class Servicesdetailssection2Controller extends Controller
     function servicesdetailssection2Get(){
 
         $result = Servicesdetailssection2::where('servicesdetailssection2_status',0)->orderBy('servicesdetailssection2_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+
+    function servicesdetailssection2GetSuper(){
+
+        $result = Servicesdetailssection2::where('servicesdetailssection2_status',7)->orderBy('servicesdetailssection2_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -72,6 +83,36 @@ class Servicesdetailssection2Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+
+    function servicesdetailssection2Approve($id, Request $req){
+
+        $servicesdetailssection2 = Servicesdetailssection2::find($id);
+        $servicesdetailssection2->servicesdetailssection2_status = 0;
+        
+        
+            $servicesdetailssection2->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+
+    function servicesdetailssection2Decline($id, Request $req){
+
+        $servicesdetailssection2 = Servicesdetailssection2::find($id);
+        $servicesdetailssection2->servicesdetailssection2_status = 2;
+        
+        
+            $servicesdetailssection2->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

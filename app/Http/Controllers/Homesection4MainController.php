@@ -177,14 +177,14 @@ class Homesection4MainController extends Controller
         }
 
 
-        $homesection4Main->homesection4_main_status = 0;
+        $homesection4Main->homesection4_main_status = 7;
         $homesection4Main->homesection4_main_date = date("Y-m-d");
 
 
         if($req->input('main_title')!='' && $req->file('main_icon')!='' && $req->file('main_image1')!=''){
             $homesection4Main->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -198,6 +198,17 @@ class Homesection4MainController extends Controller
     function homesection4MainGet(){
 
         $result = Homesection4Main::where('homesection4_main_status',0)->orderBy('homesection4_main_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+
+    function homesection4MainGetSuper(){
+
+        $result = Homesection4Main::where('homesection4_main_status',7)->orderBy('homesection4_main_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -439,6 +450,36 @@ class Homesection4MainController extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+
+    function homesection4MainApprove($id, Request $req){
+
+        $homesection4Main = Homesection4Main::find($id);
+        $homesection4Main->homesection4_main_status = 0;
+        
+        
+            $homesection4Main->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+
+    function homesection4MainDecline($id, Request $req){
+
+        $homesection4Main = Homesection4Main::find($id);
+        $homesection4Main->homesection4_main_status = 2;
+        
+        
+            $homesection4Main->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

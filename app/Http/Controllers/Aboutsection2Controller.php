@@ -85,14 +85,14 @@ class Aboutsection2Controller extends Controller
             ]);
         }
 
-        $aboutsection2->aboutsection2_status = 0;
+        $aboutsection2->aboutsection2_status = 7;
         $aboutsection2->aboutsection2_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('description')!='' && $req->file('image')!=''){
             $aboutsection2->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -106,6 +106,16 @@ class Aboutsection2Controller extends Controller
     function aboutsection2Get(){
 
         $result = Aboutsection2::where('aboutsection2_status',0)->orderBy('aboutsection2_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function aboutsection2GetSuper(){
+
+        $result = Aboutsection2::where('aboutsection2_status',7)->orderBy('aboutsection2_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -195,6 +205,34 @@ class Aboutsection2Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function aboutsection2Approve($id, Request $req){
+
+        $aboutsection2 = Aboutsection2::find($id);
+        $aboutsection2->aboutsection2_status = 0;
+        
+        
+            $aboutsection2->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function aboutsection2Decline($id, Request $req){
+
+        $aboutsection2 = Aboutsection2::find($id);
+        $aboutsection2->aboutsection2_status = 2;
+        
+        
+            $aboutsection2->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

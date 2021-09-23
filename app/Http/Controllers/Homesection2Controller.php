@@ -85,14 +85,14 @@ class Homesection2Controller extends Controller
             ]);
         }
 
-        $homesection2->homesection2_status = 0;
+        $homesection2->homesection2_status = 7;
         $homesection2->homesection2_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('description')!='' && $req->file('image')!=''){
             $homesection2->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Please Wait for approval."
             ]);
         }else{
             return response([
@@ -106,6 +106,16 @@ class Homesection2Controller extends Controller
     function homesection2Get(){
 
         $result = Homesection2::where('homesection2_status',0)->orderBy('homesection2_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection2GetSuper(){
+
+        $result = Homesection2::where('homesection2_status',7)->orderBy('homesection2_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -208,6 +218,34 @@ class Homesection2Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function homesection2Approve($id, Request $req){
+
+        $homesection2 = Homesection2::find($id);
+        $homesection2->homesection2_status = 0;
+        
+        
+            $homesection2->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function homesection2Decline($id, Request $req){
+
+        $homesection2 = Homesection2::find($id);
+        $homesection2->homesection2_status = 2;
+        
+        
+            $homesection2->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

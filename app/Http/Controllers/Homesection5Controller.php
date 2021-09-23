@@ -14,14 +14,14 @@ class Homesection5Controller extends Controller
         
         
 
-        $homesection5->homesection5_status = 0;
+        $homesection5->homesection5_status = 7;
         $homesection5->homesection5_date = date("Y-m-d");
 
 
         if($req->input('title')!=''){
             $homesection5->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -35,6 +35,16 @@ class Homesection5Controller extends Controller
     function homesection5Get(){
 
         $result = Homesection5::where('homesection5_status',0)->orderBy('homesection5_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection5GetSuper(){
+
+        $result = Homesection5::where('homesection5_status',7)->orderBy('homesection5_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -72,6 +82,34 @@ class Homesection5Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function homesection5Approve($id, Request $req){
+
+        $homesection5 = Homesection5::find($id);
+        $homesection5->homesection5_status = 0;
+        
+        
+            $homesection5->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function homesection5Decline($id, Request $req){
+
+        $homesection5 = Homesection5::find($id);
+        $homesection5->homesection5_status = 2;
+        
+        
+            $homesection5->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

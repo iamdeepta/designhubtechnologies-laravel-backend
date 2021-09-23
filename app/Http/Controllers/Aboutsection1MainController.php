@@ -84,14 +84,14 @@ class Aboutsection1MainController extends Controller
             ]);
         }
 
-        $aboutsection1Main->aboutsection1_main_status = 0;
+        $aboutsection1Main->aboutsection1_main_status = 7;
         $aboutsection1Main->aboutsection1_main_date = date("Y-m-d");
 
 
         if($req->input('main_title')!='' && $req->input('main_description')!='' && $req->file('main_image')!=''){
             $aboutsection1Main->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -105,6 +105,16 @@ class Aboutsection1MainController extends Controller
     function aboutsection1MainGet(){
 
         $result = Aboutsection1Main::where('aboutsection1_main_status',0)->orderBy('aboutsection1_main_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function aboutsection1MainGetSuper(){
+
+        $result = Aboutsection1Main::where('aboutsection1_main_status',7)->orderBy('aboutsection1_main_id','desc')->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -194,6 +204,34 @@ class Aboutsection1MainController extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function aboutsection1MainApprove($id, Request $req){
+
+        $aboutsection1Main = Aboutsection1Main::find($id);
+        $aboutsection1Main->aboutsection1_main_status = 0;
+        
+        
+            $aboutsection1Main->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function aboutsection1MainDecline($id, Request $req){
+
+        $aboutsection1Main = Aboutsection1Main::find($id);
+        $aboutsection1Main->aboutsection1_main_status = 2;
+        
+        
+            $aboutsection1Main->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

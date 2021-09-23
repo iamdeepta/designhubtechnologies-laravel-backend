@@ -13,14 +13,14 @@ class Servicesection1Controller extends Controller
         $servicesection1->servicesection1_title = $req->input('title');
         $servicesection1->servicesection1_description = $req->input('description');
 
-        $servicesection1->servicesection1_status = 0;
+        $servicesection1->servicesection1_status = 7;
         $servicesection1->servicesection1_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('description')!=''){
             $servicesection1->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -34,6 +34,16 @@ class Servicesection1Controller extends Controller
     function servicesection1Get(){
 
         $result = Servicesection1::where('servicesection1_status',0)->orderBy('servicesection1_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function servicesection1GetSuper(){
+
+        $result = Servicesection1::where('servicesection1_status',7)->orderBy('servicesection1_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -72,6 +82,34 @@ class Servicesection1Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function servicesection1Approve($id, Request $req){
+
+        $servicesection1 = Servicesection1::find($id);
+        $servicesection1->servicesection1_status = 0;
+        
+        
+            $servicesection1->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function servicesection1Decline($id, Request $req){
+
+        $servicesection1 = Servicesection1::find($id);
+        $servicesection1->servicesection1_status = 2;
+        
+        
+            $servicesection1->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

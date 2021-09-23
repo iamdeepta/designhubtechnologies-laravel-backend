@@ -22,14 +22,14 @@ class Homesection7Controller extends Controller
         $homesection7->homesection7_number3_title = $req->input('number3_title');
         $homesection7->homesection7_number3 = $req->input('number3');
 
-        $homesection7->homesection7_status = 0;
+        $homesection7->homesection7_status = 7;
         $homesection7->homesection7_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('description')!=''){
             $homesection7->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -43,6 +43,16 @@ class Homesection7Controller extends Controller
     function homesection7Get(){
 
         $result = Homesection7::where('homesection7_status',0)->orderBy('homesection7_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection7GetSuper(){
+
+        $result = Homesection7::where('homesection7_status',7)->orderBy('homesection7_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -87,6 +97,34 @@ class Homesection7Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function homesection7Approve($id, Request $req){
+
+        $homesection7 = Homesection7::find($id);
+        $homesection7->homesection7_status = 0;
+        
+        
+            $homesection7->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function homesection7Decline($id, Request $req){
+
+        $homesection7 = Homesection7::find($id);
+        $homesection7->homesection7_status = 2;
+        
+        
+            $homesection7->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }

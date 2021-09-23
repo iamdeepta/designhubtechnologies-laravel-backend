@@ -16,14 +16,14 @@ class Homesection6Controller extends Controller
         $homesection6->homesection6_title = $req->input('title');
         $homesection6->homesection6_category = $req->input('category');
 
-        $homesection6->homesection6_status = 0;
+        $homesection6->homesection6_status = 7;
         $homesection6->homesection6_date = date("Y-m-d");
 
 
         if($req->input('title')!='' && $req->input('category')!=''){
             $homesection6->save();
             return response([
-                'success'=>"Added Successfully"
+                'success'=>"Request sent. Wait for approval."
             ]);
         }else{
             return response([
@@ -37,6 +37,16 @@ class Homesection6Controller extends Controller
     function homesection6Get(){
 
         $result = Homesection6::where('homesection6_status',0)->orderBy('homesection6_id','desc')->first(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function homesection6GetSuper(){
+
+        $result = Homesection6::where('homesection6_status',7)->orderBy('homesection6_id','desc')->first(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -75,6 +85,34 @@ class Homesection6Controller extends Controller
 
             return response([
                 'success'=>"Deleted Successfully"
+            ]);
+        
+    }
+
+    function homesection6Approve($id, Request $req){
+
+        $homesection6 = Homesection6::find($id);
+        $homesection6->homesection6_status = 0;
+        
+        
+            $homesection6->save();
+
+            return response([
+                'success'=>"Approved Successfully"
+            ]);
+        
+    }
+
+    function homesection6Decline($id, Request $req){
+
+        $homesection6 = Homesection6::find($id);
+        $homesection6->homesection6_status = 2;
+        
+        
+            $homesection6->save();
+
+            return response([
+                'success'=>"Declined Successfully"
             ]);
         
     }
