@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Homesection1Controller;
 use App\Http\Controllers\Homesection2Controller;
+use App\Http\Controllers\Homesection2HeaderController;
 use App\Http\Controllers\Homesection3Controller;
 use App\Http\Controllers\Homesection5Controller;
 use App\Http\Controllers\Homesection8Controller;
@@ -67,6 +68,15 @@ Route::post('homesection2Update/{id}',[Homesection2Controller::class,'homesectio
 Route::post('homesection2Approve/{id}',[Homesection2Controller::class,'homesection2Approve']);
 Route::post('homesection2Decline/{id}',[Homesection2Controller::class,'homesection2Decline']);
 Route::post('homesection2UpdateImage/{name?}',[Homesection2Controller::class,'homesection2UpdateImage'])->where('name', '(.*)');
+
+//Home section2 Header
+Route::post('homesection2HeaderAdd',[Homesection2HeaderController::class,'homesection2HeaderAdd']);
+Route::get('homesection2HeaderGet',[Homesection2HeaderController::class,'homesection2HeaderGet']);
+Route::get('homesection2HeaderGetSuper',[Homesection2HeaderController::class,'homesection2HeaderGetSuper']);
+Route::post('homesection2HeaderDelete/{id}',[Homesection2HeaderController::class,'homesection2HeaderDelete']);
+Route::post('homesection2HeaderApprove/{id}',[Homesection2HeaderController::class,'homesection2HeaderApprove']);
+Route::post('homesection2HeaderDecline/{id}',[Homesection2HeaderController::class,'homesection2HeaderDecline']);
+Route::post('homesection2HeaderUpdate/{id}',[Homesection2HeaderController::class,'homesection2HeaderUpdate']);
 
 //Home section3
 Route::post('homesection3Add',[Homesection3Controller::class,'homesection3Add']);
