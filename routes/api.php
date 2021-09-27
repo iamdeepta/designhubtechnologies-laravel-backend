@@ -26,6 +26,7 @@ use App\Http\Controllers\Servicesdetailssection1Controller;
 use App\Http\Controllers\Servicesdetailssection2Controller;
 use App\Http\Controllers\Servicesdetailssection2MainController;
 use App\Http\Controllers\BlogsectionController;
+use App\Http\Controllers\Homesection1MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,15 @@ Route::post('homesection1UpdateImage1/{name?}',[Homesection1Controller::class,'h
 Route::post('homesection1UpdateImage2/{name?}',[Homesection1Controller::class,'homesection1UpdateImage2'])->where('name', '(.*)');
 Route::post('homesection1UpdateImage3/{name?}',[Homesection1Controller::class,'homesection1UpdateImage3'])->where('name', '(.*)');
 Route::post('homesection1UpdateImage4/{name?}',[Homesection1Controller::class,'homesection1UpdateImage4'])->where('name', '(.*)');
+
+//Home section1 main
+Route::post('homesection1MainAdd',[Homesection1MainController::class,'homesection1MainAdd']);
+Route::get('homesection1MainGet',[Homesection1MainController::class,'homesection1MainGet']);
+Route::get('homesection1MainGetSuper',[Homesection1MainController::class,'homesection1MainGetSuper']);
+Route::post('homesection1MainDelete/{id}',[Homesection1MainController::class,'homesection1MainDelete']);
+Route::post('homesection1MainUpdate/{id}',[Homesection1MainController::class,'homesection1MainUpdate']);
+Route::post('homesection1MainApprove/{id}',[Homesection1MainController::class,'homesection1MainApprove']);
+Route::post('homesection1MainDecline/{id}',[Homesection1MainController::class,'homesection1MainDecline']);
 
 //Home section2
 Route::post('homesection2Add',[Homesection2Controller::class,'homesection2Add']);
