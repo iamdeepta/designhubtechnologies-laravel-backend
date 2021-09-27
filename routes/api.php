@@ -134,6 +134,7 @@ Route::post('homesection6MainUpdate/{id}',[Homesection6MainController::class,'ho
 Route::post('homesection6MainApprove/{id}',[Homesection6MainController::class,'homesection6MainApprove']);
 Route::post('homesection6MainDecline/{id}',[Homesection6MainController::class,'homesection6MainDecline']);
 Route::post('homesection6MainUpdateImage/{name?}',[Homesection6MainController::class,'homesection6MainUpdateImage'])->where('name', '(.*)');
+Route::post('homesection6MainUpdateImage1/{name?}',[Homesection6MainController::class,'homesection6MainUpdateImage1'])->where('name', '(.*)');
 
 //Home section7
 Route::post('homesection7Add',[Homesection7Controller::class,'homesection7Add']);

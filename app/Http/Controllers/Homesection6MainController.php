@@ -84,11 +84,44 @@ class Homesection6MainController extends Controller
             ]);
         }
 
+        if($req->file('main_image1')!=''){
+        $homesection6Main->homesection6_main_image1 = $req->file('main_image1')->store('homesection_others');
+        $homesection6Main->homesection6_main_image1 = $req->file('main_image1')->hashName();
+        $image_name1 = pathinfo($homesection6Main->homesection6_main_image1, PATHINFO_FILENAME);
+        $image_extension1 = pathinfo($homesection6Main->homesection6_main_image1, PATHINFO_EXTENSION);
+
+        $new_image_name1 = 'homesection1/'.$image_name1.'.webp';
+
+        if($image_extension1=='PNG' || $image_extension1=='png'){
+            Homesection6MainController::png_to_webp($homesection6Main->homesection6_main_image1,$new_image_name1);
+            $homesection6Main->homesection6_main_image1 = $new_image_name1;
+            
+        }elseif($image_extension1=='JPG' || $image_extension1=='jpg' || $image_extension1=='JPEG' || $image_extension1=='jpeg'){
+            Homesection6MainController::jpg_to_webp($homesection6Main->homesection6_main_image1,$new_image_name1);
+            $homesection6Main->homesection6_main_image1 = $new_image_name1;
+            
+        }else{
+            return response([
+                'error'=>"Please select jpg or png image"
+            ]);
+        }
+        
+        //delete pic from another folder
+            if(file_exists(base_path() .'/storage/app/homesection_others/'.$req->file('main_image1')->hashName())) {
+                @unlink(base_path() .'/storage/app/homesection_others/'.$req->file('main_image1')->hashName());
+            }
+        
+        }else{
+            return response([
+                'error'=>"Please select work image"
+            ]);
+        }
+
         $homesection6Main->homesection6_main_status = 7;
         $homesection6Main->homesection6_main_date = date("Y-m-d");
 
 
-        if($req->input('main_title')!='' && $req->input('main_description')!='' && $req->file('main_image')!=''){
+        if($req->input('main_title')!='' && $req->input('main_description')!='' && $req->file('main_image')!='' && $req->file('main_image1')!=''){
             $homesection6Main->save();
             return response([
                 'success'=>"Request sent. Wait for approval."
@@ -179,6 +212,57 @@ class Homesection6MainController extends Controller
         //delete pic from another folder
             if(file_exists(base_path() .'/storage/app/homesection_others/'.$req->file('main_image_up')->hashName())) {
                 @unlink(base_path() .'/storage/app/homesection_others/'.$req->file('main_image_up')->hashName());
+            }
+
+            $homesection6Main->save();
+            return response([
+                'success'=>"Image Updated Successfully"
+            ]);
+
+        }else{
+            return response([
+                'error'=>"Please select an image"
+            ]);
+        }
+    }
+
+
+    //update image1
+    function homesection6MainUpdateImage1($name, Request $req){
+
+        $homesection6Main = Homesection6Main::where('homesection6_main_image1',$name)->first();
+
+        if($req->file('main_image1_up')!=''){
+
+            //delete existing image uploaded before updating from homesection1
+        if(file_exists(base_path() .'/storage/app/'.$homesection6Main->homesection6_main_image1)) {
+                @unlink(base_path() .'/storage/app/'.$homesection6Main->homesection6_main_image1);
+            }
+        
+        $homesection6Main->homesection6_main_image1 = $req->file('main_image1_up')->store('homesection_others');
+        $homesection6Main->homesection6_main_image1 = $req->file('main_image1_up')->hashName();
+        $image_name = pathinfo($homesection6Main->homesection6_main_image1, PATHINFO_FILENAME);
+        $image_extension = pathinfo($homesection6Main->homesection6_main_image1, PATHINFO_EXTENSION);
+
+        $new_image_name = 'homesection1/'.$image_name.'.webp';
+
+        if($image_extension=='PNG' || $image_extension=='png'){
+            Homesection6MainController::png_to_webp($homesection6Main->homesection6_main_image1,$new_image_name);
+            $homesection6Main->homesection6_main_image1 = $new_image_name;
+            
+        }elseif($image_extension=='JPG' || $image_extension=='jpg' || $image_extension=='JPEG' || $image_extension=='jpeg'){
+            Homesection6MainController::jpg_to_webp($homesection6Main->homesection6_main_image1,$new_image_name);
+            $homesection6Main->homesection6_main_image1 = $new_image_name;
+            
+        }else{
+            return response([
+                'error'=>"Please select jpg or png image"
+            ]);
+        }
+        
+        //delete pic from another folder
+            if(file_exists(base_path() .'/storage/app/homesection_others/'.$req->file('main_image1_up')->hashName())) {
+                @unlink(base_path() .'/storage/app/homesection_others/'.$req->file('main_image1_up')->hashName());
             }
 
             $homesection6Main->save();
