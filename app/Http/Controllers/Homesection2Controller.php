@@ -125,7 +125,7 @@ class Homesection2Controller extends Controller
 
     function homesection2Get3(){
 
-        $result = Homesection2::where('homesection2_status',0)->orderBy('homesection2_id','desc')->take(3)->get(); 
+        $result = Homesection2::where('homesection2_status',0)->orderBy('homesection2_id','desc')->take(6)->get(); 
         if($result==true){
             return response()->json($result);
         }else{
