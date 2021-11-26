@@ -178,6 +178,37 @@ class BlogsectionController extends Controller
         }
     }
 
+
+    function blogsectionGetSingle($id){
+
+        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id',$id)->orderBy('blogsection_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function blogsectionGetPrev($id){
+
+        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','<',$id)->orderBy('blogsection_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+    function blogsectionGetNext($id){
+
+        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','>',$id)->orderBy('blogsection_id','asc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
     function blogsectionGetSuper(){
 
         $result = Blogsection::where('blogsection_status',7)->orderBy('blogsection_id','desc')->get(); 

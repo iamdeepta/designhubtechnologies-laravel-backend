@@ -273,6 +273,9 @@ Route::post('servicesdetailssection2MainDecline/{id}',[Servicesdetailssection2Ma
 //Blog section
 Route::post('blogsectionAdd',[BlogsectionController::class,'blogsectionAdd']);
 Route::get('blogsectionGet',[BlogsectionController::class,'blogsectionGet']);
+Route::get('blogsectionGetSingle/{id}',[BlogsectionController::class,'blogsectionGetSingle']);
+Route::get('blogsectionGetPrev/{id}',[BlogsectionController::class,'blogsectionGetPrev']);
+Route::get('blogsectionGetNext/{id}',[BlogsectionController::class,'blogsectionGetNext']);
 Route::get('blogsectionGetSuper',[BlogsectionController::class,'blogsectionGetSuper']);
 Route::get('blogsectionGet3',[BlogsectionController::class,'blogsectionGet3']);
 Route::post('blogsectionDelete/{id}',[BlogsectionController::class,'blogsectionDelete']);
