@@ -1,0 +1,1 @@
+<p>Congratulations, you subscribed to our newsletter!</p>

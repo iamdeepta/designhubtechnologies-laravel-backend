@@ -27,6 +27,7 @@ use App\Http\Controllers\Servicesdetailssection2Controller;
 use App\Http\Controllers\Servicesdetailssection2MainController;
 use App\Http\Controllers\BlogsectionController;
 use App\Http\Controllers\Homesection1MainController;
+use App\Http\Controllers\NewsletterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -286,3 +287,8 @@ Route::post('blogsectionUpdateIcon/{name?}',[BlogsectionController::class,'blogs
 Route::post('blogsectionUpdateImage1/{name?}',[BlogsectionController::class,'blogsectionUpdateImage1'])->where('name', '(.*)');
 Route::post('blogsectionUpdateImage2/{name?}',[BlogsectionController::class,'blogsectionUpdateImage2'])->where('name', '(.*)');
 Route::post('blogsectionUpdateImage3/{name?}',[BlogsectionController::class,'blogsectionUpdateImage3'])->where('name', '(.*)');
+
+
+//Newsletter
+Route::post('newsletterAdd',[NewsletterController::class,'newsletterAdd']);
+Route::get('newsletterGetOne/{name}',[NewsletterController::class,'newsletterGetOne']);

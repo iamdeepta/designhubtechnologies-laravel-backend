@@ -191,7 +191,7 @@ class BlogsectionController extends Controller
 
     function blogsectionGetPrev($id){
 
-        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','<',$id)->orderBy('blogsection_id','desc')->get(); 
+        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','<',$id)->orderBy('blogsection_id','desc')->take(1)->get(); 
         if($result==true){
             return response()->json($result);
         }else{
@@ -201,7 +201,7 @@ class BlogsectionController extends Controller
 
     function blogsectionGetNext($id){
 
-        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','>',$id)->orderBy('blogsection_id','asc')->get(); 
+        $result = Blogsection::where('blogsection_status',0)->where('blogsection_id','>',$id)->orderBy('blogsection_id','asc')->take(1)->get(); 
         if($result==true){
             return response()->json($result);
         }else{
