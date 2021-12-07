@@ -1,0 +1,1 @@
+<p style="white-space: pre">{{$newsletter_message}}</p>

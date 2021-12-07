@@ -291,4 +291,7 @@ Route::post('blogsectionUpdateImage3/{name?}',[BlogsectionController::class,'blo
 
 //Newsletter
 Route::post('newsletterAdd',[NewsletterController::class,'newsletterAdd']);
+Route::post('newsletterUserDelete/{id}',[NewsletterController::class,'newsletterUserDelete']);
+Route::post('newsletterSend',[NewsletterController::class,'newsletterSend']);
+Route::get('newsletterGet',[NewsletterController::class,'newsletterGet']);
 Route::get('newsletterGetOne/{name}',[NewsletterController::class,'newsletterGetOne']);

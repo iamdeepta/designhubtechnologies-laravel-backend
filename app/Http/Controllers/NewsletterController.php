@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Newsletter;
 use Mail;
+use DB;
 
 class NewsletterController extends Controller
 {
@@ -43,6 +44,45 @@ class NewsletterController extends Controller
     }
 
 
+    function newsletterSend(Request $req){
+
+        date_default_timezone_set("Asia/Dhaka");
+        
+        //$newsletter = new Newsletter;
+        $newsletter = DB::select('select * from tbl_newsletter');
+        // $newsletter->newsletter_email = $req->input('newsletter_email');
+        
+
+        // $newsletter->newsletter_status = 0;
+        // $newsletter->newsletter_date = date("Y-m-d");
+
+        // $newsletter->save();
+
+        if($req->input('newsletter_message')!=''){
+            
+            foreach($newsletter as $newsletters){
+        $data = ['newsletter_message'=>$req->input('newsletter_message')];
+        $user['to'] = $newsletters->newsletter_email;
+        Mail::send('newsletterMessage',$data,function($messages) use ($user){
+            $messages->to($user['to']);
+            $messages->subject('Newsletter From Designhub Technologies');
+        });
+
+    }
+
+            return response([
+                'success'=>"Message sent."
+            ]);
+        }else{
+            return response([
+                'error'=>"Please write some message"
+            ]);
+        }
+        
+        
+    }
+
+
     function newsletterGetOne($name){
 
         $result = Newsletter::where('newsletter_email',$name)->where('newsletter_status',0)->orderBy('newsletter_id','desc')->get(); 
@@ -51,6 +91,32 @@ class NewsletterController extends Controller
         }else{
             return response()->json(["error"=>"Data not found"]);
         }
+    }
+
+
+    function newsletterGet(){
+
+        $result = Newsletter::where('newsletter_status',0)->orderBy('newsletter_id','desc')->get(); 
+        if($result==true){
+            return response()->json($result);
+        }else{
+            return response()->json(["error"=>"Data not found"]);
+        }
+    }
+
+
+    function newsletterUserDelete($id, Request $req){
+
+        $newsletter = Newsletter::find($id);
+        $newsletter->newsletter_status = 1;
+        
+        
+            $newsletter->save();
+
+            return response([
+                'success'=>"Deleted Successfully"
+            ]);
+        
     }
 
     // function homesection4GetSuper(){
