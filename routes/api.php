@@ -28,6 +28,8 @@ use App\Http\Controllers\Servicesdetailssection2MainController;
 use App\Http\Controllers\BlogsectionController;
 use App\Http\Controllers\Homesection1MainController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ContactDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -295,3 +297,11 @@ Route::post('newsletterUserDelete/{id}',[NewsletterController::class,'newsletter
 Route::post('newsletterSend',[NewsletterController::class,'newsletterSend']);
 Route::get('newsletterGet',[NewsletterController::class,'newsletterGet']);
 Route::get('newsletterGetOne/{name}',[NewsletterController::class,'newsletterGetOne']);
+
+//Contact Message
+Route::post('sendMessage',[ContactController::class,'sendMessage']);
+Route::get('contactGet',[ContactController::class,'contactGet']);
+
+//Contact Details
+Route::post('contactDetailUpdate/{id}',[ContactDetailController::class,'contactDetailUpdate']);
+Route::get('contactDetailGet',[ContactDetailController::class,'contactDetailGet']);
